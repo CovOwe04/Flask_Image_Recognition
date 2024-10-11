@@ -16147,3 +16147,5 @@ Assignment2_Environment/Scripts/tflite_convert.exe
 Assignment2_Environment/Scripts/toco_from_protos.exe
 Assignment2_Environment/Scripts/toco.exe
 Assignment2_Environment/Scripts/wheel.exe
+__pycache__/app.cpython-310.pyc
+__pycache__/model.cpython-310.pyc
