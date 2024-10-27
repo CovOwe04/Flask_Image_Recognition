@@ -5,8 +5,8 @@ import numpy as np
 from PIL import Image
 
 # Loading model
-model = load_model("C:/Users/OwenA/Documents/VsCode/Assignment 2/Flask_Image_Recognition/digit_model.h5")
-
+model = load_model("digit_model.h5")
+# C:/Users/dankp/Downloads/Software_Quality_A2/Flask_Image_Recognition-1/digit_model.h5
 
 # Preparing and pre-processing the image
 def preprocess_img(img_path):
