@@ -5,29 +5,26 @@ on:
     branches:
       - main
 
-
 jobs:
-  sonar-scan:
+  build:
+    name: Build and analyze
     runs-on: ubuntu-latest
-    services:
-      sonarqube:
-        image: sonarqube:latest
-        ports:
-          - 9000:9000
-        options: --health-cmd='curl -f http://localhost:9000/api/system/health' --health-interval=10s --health-timeout=5s --health-retries=5
+    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Wait for SonarQube to be up and running
+      - name: Install sonar-scanner
         run: |
-          until $(curl -o /dev/null -s -f http://localhost:9000/api/system/status); do
-            echo "Waiting for SonarQube to start..."
-            sleep 5
-          done
-
-      - name: SonarQube Scan
-        env:
-          SONAR_HOST_URL: "http://localhost:9000"
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        uses: sonarsource/sonarqube-scan-action@v3
+          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+          unzip sonar-scanner.zip -d $HOME
+          export PATH="$HOME/sonar-scanner-4.8.0.2856-linux/bin:$PATH"
+      
+      - name: Run SonarQube scan
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=your_project_key \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
