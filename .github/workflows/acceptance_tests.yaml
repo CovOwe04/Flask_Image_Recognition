@@ -1,10 +1,10 @@
 name: AcceptanceTests
 
 on: 
-workflow_dispatch:
-workflow_run:
-  workflows: ['HappyAndSadPathTests']
-  types: [completed]
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['HappyAndSadPathTests']
+    types: [completed]
 
 jobs:
   acceptance-tests:
