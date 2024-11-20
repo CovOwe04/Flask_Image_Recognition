@@ -1,6 +1,10 @@
 name: AcceptanceTests
 
-on: [push]
+on: 
+workflow_dispatch:
+workflow_run:
+  workflows: ['HappyAndSadPathTests']
+  types: [completed]
 
 jobs:
   acceptance-tests:
