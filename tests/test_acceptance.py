@@ -1,6 +1,7 @@
 import sys
 import os
 import pytest
+from bs4 import BeautifulSoup
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app import app
 
@@ -55,3 +56,25 @@ def test_invalid_file_handling(client):
     # Then
     assert response.status_code == 200
     assert b"File cannot be processed" in response.data
+
+# Acceptance Test 3: Accurate Prediction for Specific Image
+def test_prediction_accuracy(client):
+    """
+    Test Name: Accurate Prediction for Valid Image
+    Given: The user uploads an image of a specific hand sign ('2').
+    When: The system processes the image.
+    Then: It should correctly predict the digit as '2'.
+    """
+    # Given
+    file_path = 'tests/Sign2.jpeg' 
+    file_name = 'Sign2.jpeg'
+
+    # When
+    response = upload_file(client, file_path, file_name)
+    assert response.status_code == 200
+
+    # Then
+    soup = BeautifulSoup(response.data, 'html.parser')  # Parse the HTML response
+    prediction_text = soup.find('h2').text.strip()  # Extract the prediction text
+    assert prediction_text == "2"  # Ensure the prediction matches the expected digit
+
