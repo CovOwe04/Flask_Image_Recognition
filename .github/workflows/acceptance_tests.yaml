@@ -8,7 +8,6 @@ workflow_run:
 
 jobs:
   acceptance-tests:
-    needs: integration_tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
