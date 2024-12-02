@@ -12,7 +12,3 @@ class FlaskAppUser(HttpUser):
         with open("tests/Sign2.jpeg", "rb") as image:
             files = {"file": image}
             self.client.post("/prediction", files=files)
-
-    @task(2)
-    def static_css(self):
-        self.client.get("/static/css/custom.css")
